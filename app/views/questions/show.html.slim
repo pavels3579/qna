@@ -1,2 +1,25 @@
 h1= @question.title
 p= @question.body
+
+- if current_user&.its_author?(@question)
+  = link_to 'Delete question', question_path(@question), method: :delete
+
+= render 'shared/errors', resource: @answer
+
+= form_with model: [@question, @answer], local: true do |f|
+  = f.label :body
+  = f.text_area :body
+  = f.submit "Create answer"
+
+h2= 'Answers list'
+
+- if @question.answers.count
+  table
+    tr
+      th
+        = 'Body'
+      th
+        = 'Actions'
+    = render @question.answers
+- else
+  p= 'No answers'
