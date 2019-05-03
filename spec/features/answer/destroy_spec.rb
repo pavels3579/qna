@@ -13,7 +13,6 @@ feature 'Authenticated user can destroy answer', %q{
   given!(:answer) { create(:answer, question: question, author: user) }
 
   given(:question2) { create(:question, author: user) }
-  given!(:another_answer) { create(:answer, question: question2, author: another_user) }
 
   describe 'Authenticated user' do
 
@@ -31,14 +30,14 @@ feature 'Authenticated user can destroy answer', %q{
     scenario 'tries to destroy not his answer' do
       visit question_path(question2)
 
-      expect(page).not_to have_content 'Delete answer'
+      expect(page).not_to have_link 'Delete answer'
     end
   end
 
   scenario 'Unauthenticated user tries to destroy an answer' do
     visit question_path(question)
 
-    expect(page).not_to have_content 'Delete answer'
+    expect(page).not_to have_link 'Delete answer'
   end
 
 end
