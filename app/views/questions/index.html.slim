@@ -1,0 +1,13 @@
+p= link_to "Sign out", destroy_user_session_path, method: :delete
+
+p= link_to "Ask question", new_question_path
+
+h1= 'Questions list'
+
+table
+  tr
+    th
+      = 'Title'
+    th
+      = 'Body'
+  = render @questions
