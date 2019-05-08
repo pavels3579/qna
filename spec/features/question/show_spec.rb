@@ -12,7 +12,6 @@ feature 'User can show question and answers', %q{
   scenario 'Unauthenticated user tries to show questions list' do
     visit question_path(question)
 
-    expect(page).to have_content 'Answers list'
     answers.each do |_, index|
       expect(page).to have_content "MyAnswerText#{index}"
     end

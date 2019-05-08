@@ -1,6 +1,10 @@
-tr
-  td
-    = answer.body
-  td
-    - if current_user&.its_author?(answer)
-      = link_to 'Delete answer', question_path(@question, answer), method: :delete
+p= answer.body
+- if current_user&.its_author?(answer)
+  = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+  | |
+  = link_to 'Delete answer', question_path(@question, answer), method: :delete
+
+  = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+    = f.label :body, 'Your answer'
+    = f.text_area :body
+    = f.submit "Save"
