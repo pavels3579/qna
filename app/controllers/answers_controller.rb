@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_question, only: [:new, :create, :index, :destroy]
+  before_action :load_question, only: [:new, :create]
   before_action :load_answer, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -22,13 +22,16 @@ class AnswersController < ApplicationController
   end
 
   def update
+    return head :forbidden unless current_user.its_author?(@answer)
+
     @answer.update(answer_params)
     @question = @answer.question
   end
 
   def destroy
-    @answer.destroy if current_user.its_author?(@answer)
-    redirect_to question_path(@question)
+    return head :forbidden unless current_user.its_author?(@answer)
+
+    @answer.destroy
   end
 
   private

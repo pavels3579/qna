@@ -11,7 +11,7 @@ feature 'User can show questions list', %q{
   scenario 'Unauthenticated user tries to show questions list' do
     visit questions_path
 
-    expect(page).to have_content 'Questions list'
+    expect(page).to have_content 'Questions'
     questions.each do |_, index|
       expect(page).to have_content "MyString#{index}"
     end

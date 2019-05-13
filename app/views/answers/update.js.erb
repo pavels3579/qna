@@ -1,5 +1,7 @@
 $('.answer-errors').html('<%= render 'shared/errors', resource: @answer %>');
 
 <% if !@answer.errors.present? %>
-  $('.answers').html('<%= j render @question.answers %>');
+  $('div#<%= @answer.id %>').html('<%= j render partial: 'answers/answer', locals: { answer: @answer} %>');
+  $('div#<%= @answer.id %>').find('#edit-answer-<%= @answer.id %>').addClass('hidden');
+  $('div#<%= @answer.id %>').find('.edit-answer-link').show();
 <% end %>

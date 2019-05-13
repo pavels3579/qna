@@ -43,12 +43,12 @@ RSpec.describe AnswersController, type: :controller do
       before { login(user) }
 
       it 'deletes the answer' do
-        expect { delete :destroy, params: { id: answer, question_id: question } }.to change(Answer, :count).by(-1)
+        expect { delete :destroy, params: { id: answer, question_id: question }, format: :js }.to change(Answer, :count).by(-1)
       end
 
-      it 'redirects to index' do
-        delete :destroy, params: { id: answer, question_id: question }
-        expect(response).to redirect_to assigns(:question)
+      it 'renders destroy' do
+        delete :destroy, params: { id: answer, question_id: question }, format: :js
+        expect(response).to render_template :destroy
       end
     end
 
@@ -56,12 +56,12 @@ RSpec.describe AnswersController, type: :controller do
       before { login(another_user) }
 
       it 'tries to delete the answer' do
-        expect { delete :destroy, params: { id: answer, question_id: question } }.not_to change(Answer, :count)
+        expect { delete :destroy, params: { id: answer, question_id: question }, format: :js }.not_to change(Answer, :count)
       end
 
-      it 'redirects to index' do
-        delete :destroy, params: { id: answer, question_id: question }
-        expect(response).to redirect_to assigns(:question)
+      it 'receives 403 responce code' do
+        delete :destroy, params: { id: answer, question_id: question }, format: :js
+        expect(response.status).to eq(403)
       end
     end
 

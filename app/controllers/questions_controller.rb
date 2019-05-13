@@ -28,11 +28,8 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if @question.update(question_params)
-      redirect_to @question
-    else
-      render :edit
-    end
+    return head :forbidden unless current_user.its_author?(@question)
+    @question.update(question_params)
   end
 
   def destroy

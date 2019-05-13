@@ -4,7 +4,7 @@ feature 'Authenticated user can destroy answer', %q{
   In order to destroy answer from a community
   As an authenticated user
   I'd like to be able to destroy the answer
-} do
+}, js: true do
 
   given(:user) { create(:user) }
   given(:another_user) { create(:user) }
