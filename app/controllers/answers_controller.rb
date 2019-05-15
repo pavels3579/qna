@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:new, :create]
-  before_action :load_answer, only: [:show, :edit, :update, :destroy]
+  before_action :load_answer, only: [:update, :destroy, :mark_as_best]
 
   def index
     @answers = @question.answers
@@ -32,6 +32,12 @@ class AnswersController < ApplicationController
     return head :forbidden unless current_user.its_author?(@answer)
 
     @answer.destroy
+  end
+
+  def mark_as_best
+    return head :forbidden unless current_user.its_author?(@answer.question)
+
+    @answer.mark_as_best
   end
 
   private
