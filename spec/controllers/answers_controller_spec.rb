@@ -102,4 +102,38 @@ RSpec.describe AnswersController, type: :controller do
 
   end
 
+  describe 'PATCH #mark_as_best' do
+    let!(:answer) { create(:answer, question: question, author: user) }
+
+    context 'by author' do
+      before { login(user) }
+      it 'changes answer as the best in the database' do
+        patch :mark_as_best, params: { id: answer }, format: :js
+        answer.reload
+        expect(answer.best).to eq true
+      end
+
+      it 'renders mark_as_best view' do
+        patch :mark_as_best, params: { id: answer }, format: :js
+        expect(response).to render_template :mark_as_best
+      end
+    end
+
+    context 'by non-author' do
+      let(:another_user) { create(:user) }
+      before { login(another_user) }
+
+      it 'tries to delete the answer' do
+        expect {patch :mark_as_best, params: { id: answer }, format: :js}.not_to change(Answer.where(best: true), :count)
+      end
+
+      it 'receives 403 responce code' do
+        patch :mark_as_best, params: { id: answer }, format: :js
+        expect(response.status).to eq(403)
+      end
+
+    end
+
+  end
+
 end
