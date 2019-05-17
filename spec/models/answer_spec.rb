@@ -12,15 +12,21 @@ RSpec.describe Answer, type: :model do
     let(:answer) { create(:answer, question: question, author: user) }
     let(:another_answer) { create(:answer, question: question, author: user) }
 
-    it 'cheks setting answer as best ' do
-      expect(answer.mark_as_best).to eq (answer.best = true)
+    it 'cheks setting answer as best' do
+      answer.mark_as_best
+      expect(answer.best).to be_truthy
     end
 
     it 'only one answer is the best ' do
       answer.mark_as_best
       another_answer.mark_as_best
 
-      expect(Answer.where(best: true).count).to eq 1
+      expect(question.answers.where(best: true).count).to eq 1
+    end
+
+    it 'cheks not setting another answer as best' do
+      answer.mark_as_best
+      expect(another_answer.best).to be_falsey
     end
   end
 
