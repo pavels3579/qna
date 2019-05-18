@@ -1,25 +1,26 @@
-h1= @question.title
-p= @question.body
 
-- if current_user&.its_author?(@question)
-  = link_to 'Delete question', question_path(@question), method: :delete
+.question
+  = render 'question_show'
 
-= render 'shared/errors', resource: @answer
+.question-errors
 
-= form_with model: [@question, @answer], local: true do |f|
+.actions
+  - if current_user&.its_author?(@question)
+    = link_to 'Edit question', '#', class: 'edit-question-link'
+    = form_with model: @question, class: 'hidden', html: { id: "edit-question" } do |f|
+      = f.label :title, 'Your title'
+      = f.text_field :title
+      = f.label :body, 'Your question'
+      = f.text_area :body
+      = f.submit "Save"
+    = link_to 'Delete question', question_path(@question), method: :delete
+
+.answer-errors
+
+.answers
+  = render @question.answers
+
+= form_with model: [@question, @answer], remote: true, class: 'new-answer' do |f|
   = f.label :body
   = f.text_area :body
   = f.submit "Create answer"
-
-h2= 'Answers list'
-
-- if @question.answers.count
-  table
-    tr
-      th
-        = 'Body'
-      th
-        = 'Actions'
-    = render @question.answers
-- else
-  p= 'No answers'

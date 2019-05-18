@@ -1,0 +1,7 @@
+$('.question-errors').html('<%= render 'shared/errors', resource: @question %>');
+
+<% if !@question.errors.present? %>
+  $('.question').html('<%= j render partial: 'question_show', locals: { question: @question} %>');
+  $('#edit-question').addClass('hidden');
+  $('.edit-question-link').show();
+<% end %>
