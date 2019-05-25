@@ -44,6 +44,30 @@ feature 'User can edit question', %q{
       expect(page).to have_selector '#edit-question textarea'
     end
 
+    scenario 'author edits a question with attached file' do
+      click_on 'Edit question'
+
+      within '.actions' do
+        attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Save'
+      end
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
+
+    scenario "author removes a question's attached files" do
+      click_on 'Edit question'
+
+      within '.actions' do
+        attach_file 'File', ["#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Save'
+      end
+      click_on 'Delete attachment'
+
+      expect(page).not_to have_link 'spec_helper.rb'
+    end
+
     scenario 'non-author tries to edit a question' do
       visit question_path(another_question)
 
