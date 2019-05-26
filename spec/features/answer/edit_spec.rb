@@ -62,7 +62,6 @@ feature 'User can edit answer', %q{
 
         expect(page).to have_link 'rails_helper.rb'
         expect(page).to have_link 'spec_helper.rb'
-
       end
     end
 
@@ -71,13 +70,13 @@ feature 'User can edit answer', %q{
       click_on 'Edit answer'
 
       within '.answers' do
+        fill_in 'Your answer', with: 'edited answer'
         attach_file 'File', ["#{Rails.root}/spec/spec_helper.rb"]
         click_on 'Save'
       end
-      #save_and_open_page
+
       click_on 'Delete answer attachment'
 
-      #visit question_path(question)
       expect(page).not_to have_link 'spec_helper.rb'
     end
 

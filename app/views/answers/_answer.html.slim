@@ -3,9 +3,10 @@
     p= answer.body
     - if answer.files.attached?
       - answer.files.each do |file|
-        p= link_to file.filename.to_s, url_for(file)
-        - if current_user&.its_author?(answer)
-          p= link_to 'Delete answer attachment', url_for(file.purge)
+        div id=file.id class='file'
+          p= link_to file.filename.to_s, url_for(file)
+          - if current_user&.its_author?(answer)
+            p= link_to 'Delete answer attachment', attachment_path(file), method: :delete, remote: true
 
     - if current_user&.its_author?(answer)
       = link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }, remote: true
@@ -18,7 +19,7 @@
           = f.text_area :body
         p
           = f.label :files
-          = f.file_field :files, multiple: true
+          = f.file_field :files, multiple: true, direct_upload: true
         p= f.submit "Save"
     - if current_user&.its_author?(answer.question)
       = link_to 'Mark as best answer', mark_as_best_answer_path(answer), class: 'mark-as-best', data: { answer_id: answer.id }, method: :patch, remote: true
