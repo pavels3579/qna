@@ -1,2 +1,9 @@
 h1= @question.title
 p= @question.body
+
+- if @question.files.attached?
+  - @question.files.each do |file|
+    div id=file.id class='file'
+      p= link_to file.filename.to_s, url_for(file)
+      - if current_user&.its_author?(@question)
+        =link_to "Delete attachment", attachment_path(file), method: :delete, remote: true

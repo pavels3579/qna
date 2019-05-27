@@ -12,6 +12,9 @@
       = f.text_field :title
       = f.label :body, 'Your question'
       = f.text_area :body
+      p
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true
       = f.submit "Save"
     = link_to 'Delete question', question_path(@question), method: :delete
 
@@ -21,6 +24,10 @@
   = render @question.answers
 
 = form_with model: [@question, @answer], remote: true, class: 'new-answer' do |f|
-  = f.label :body
-  = f.text_area :body
-  = f.submit "Create answer"
+  p
+    = f.label :body
+    = f.text_area :body
+  p
+    = f.label :files
+    = f.file_field :files, multiple: true, direct_upload: true
+  p= f.submit "Create answer"
