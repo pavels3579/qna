@@ -1,6 +1,13 @@
 - if answer.persisted?
   div id=answer.id class=('best' if answer.best)
     p= answer.body
+
+    .links
+      p Links:
+      ul
+        - answer.links.each do |link|
+          li= link_to link.name, link.url
+
     - if answer.files.attached?
       - answer.files.each do |file|
         div id=file.id class='file'
