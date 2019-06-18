@@ -8,8 +8,9 @@ feature 'User can add links to question', %q{
 
   given(:user) { create(:user) }
   given(:gist_url) { 'https://gist.github.com/vkurennov/743f9367caa1039874af5a2244e1b44c' }
+  given(:file_name) { 'sample.rb' }
 
-  scenario 'User adds link when asks a question', js: true do
+  scenario 'User adds link when asks a question' do
     sign_in(user)
 
     visit new_question_path
@@ -22,7 +23,7 @@ feature 'User can add links to question', %q{
 
     click_on 'Ask'
 
-    expect(page).to have_link 'My gist', href: gist_url
+    expect(page).to have_content file_name
   end
 
 end
