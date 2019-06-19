@@ -2,18 +2,27 @@
   div id=answer.id class=('best' if answer.best)
     p= answer.body
 
-    .links
-      p Links:
-      ul
-        - answer.links.each do |link|
-          li= link_to link.name, link.url
-
     - if answer.files.attached?
       - answer.files.each do |file|
         div id=file.id class='file'
           p= link_to file.filename.to_s, url_for(file)
           - if current_user&.its_author?(answer)
             p= link_to 'Delete answer attachment', attachment_path(file), method: :delete, remote: true
+    - unless answer.links.empty?
+      .links
+        p Links:
+        ul
+        - answer.links.each do |link|
+          - if link.persisted?
+            div id=link.id
+              - if gist?(link[:url])
+                - GistService.new(link[:url]).content.each do |gist_file|
+                  div= gist_file[:file_name]
+                  div= gist_file[:file_content]
+              - else
+                li= link_to link.name, link.url
+              - if current_user&.its_author?(@question)
+                =link_to "Delete link", link_path(link), method: :delete, remote: true
 
     - if current_user&.its_author?(answer)
       = link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }, remote: true
