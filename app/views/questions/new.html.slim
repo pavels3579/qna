@@ -18,4 +18,8 @@
       .links
         = link_to_add_association 'Add link', f, :links
 
+  p
+    = f.fields_for :best_answer_award do |l|
+      = render 'best_answer_award_fields', f: l
+
   p= f.submit 'Ask'

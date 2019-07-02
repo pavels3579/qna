@@ -14,6 +14,7 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
     @question.links.new #build
+    @question.best_answer_award = BestAnswerAward.new(question_id: @question.id)
   end
 
   def edit; end
@@ -36,6 +37,7 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question.destroy if current_user.its_author?(@question)
+
     redirect_to questions_path
   end
 
@@ -46,8 +48,13 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body,
-                                     files: [], links_attributes: [:name, :url])
+    params.require(:question).permit(
+                                :title,
+                                :body,
+                                files: [],
+                                links_attributes: [:name, :url],
+                                best_answer_award_attributes: %i[title image]
+                                )
   end
 
 end

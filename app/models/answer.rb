@@ -13,6 +13,8 @@ class Answer < ApplicationRecord
     transaction do
       question.answers.update_all(best: false)
       update!(best: true)
+
+      author.best_answer_awards << question.best_answer_award if question&.best_answer_award
     end
   end
 end
