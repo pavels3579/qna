@@ -23,7 +23,8 @@ feature 'User can mark answer as best', %q(
         visit question_path(question)
 
         first('.mark-as-best').click
-        first('.mark-as-best', {}, &:visible?).click
+        sleep(5)
+        first('.mark-as-best').click
         expect(page).to have_css('.best', count: 1)
 
       end

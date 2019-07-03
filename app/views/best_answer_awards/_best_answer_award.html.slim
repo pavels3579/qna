@@ -1,0 +1,8 @@
+tr
+  td
+    = best_answer_award.question.title
+  td
+    = best_answer_award.title
+  td
+    - if best_answer_award.image.attached?
+      = image_tag url_for(best_answer_award.image), size: "100x100"

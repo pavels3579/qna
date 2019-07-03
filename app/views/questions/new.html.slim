@@ -10,4 +10,16 @@
   p
     = f.label :files
     = f.file_field :files, multiple: true, direct_upload: true
+
+  p Links:
+  p
+    = f.fields_for :links do |l|
+      = render 'link_fields', f: l
+      .links
+        = link_to_add_association 'Add link', f, :links
+
+  p
+    = f.fields_for :best_answer_award do |l|
+      = render 'best_answer_award_fields', f: l
+
   p= f.submit 'Ask'
