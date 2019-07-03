@@ -14,7 +14,8 @@ class Answer < ApplicationRecord
       question.answers.update_all(best: false)
       update!(best: true)
 
-      author.best_answer_awards << question.best_answer_award if question&.best_answer_award
+      #author.best_answer_awards << question.best_answer_award if question&.best_answer_award
+      question.best_answer_award&.update!(user: author)
     end
   end
 end

@@ -14,7 +14,7 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
     @question.links.new #build
-    @question.best_answer_award = BestAnswerAward.new(question_id: @question.id)
+    @question.build_best_answer_award
   end
 
   def edit; end
