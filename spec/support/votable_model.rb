@@ -7,28 +7,28 @@ RSpec.shared_examples 'votable' do
     model.vote_up(user1)
     model.reload
 
-    expect(model.sum).to eq(1)
+    expect(model.vote_sum).to eq(1)
   end
 
   it '#vote_up as author of resource' do
     model.vote_up(model.author)
     model.reload
 
-    expect(model.sum).to_not eq(1)
+    expect(model.vote_sum).to_not eq(1)
   end
 
   it '#vote_down as not author of resource' do
     model.vote_down(user1)
     model.reload
 
-    expect(model.sum).to eq(-1)
+    expect(model.vote_sum).to eq(-1)
   end
 
   it '#vote_down as author of resource' do
     model.vote_down(model.author)
     model.reload
 
-    expect(model.sum).to_not eq(-1)
+    expect(model.vote_sum).to_not eq(-1)
   end
 
   it '#score_resource' do
@@ -36,6 +36,6 @@ RSpec.shared_examples 'votable' do
     model.vote_up(user2)
     model.reload
 
-    expect(model.sum).to eq(2)
+    expect(model.vote_sum).to eq(2)
   end
 end

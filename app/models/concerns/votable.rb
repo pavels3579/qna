@@ -13,7 +13,7 @@ module Votable
     vote(user, -1)
   end
 
-  def sum
+  def vote_sum
     votes.sum(:score)
   end
 
@@ -32,7 +32,7 @@ module Votable
 
     transaction do
       find_previous_vote(user)&.destroy
-      votes.create(user: user, score: score)
+      votes.create!(user: user, score: score)
     end
   end
 end

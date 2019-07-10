@@ -22,7 +22,7 @@ module Voted
       render json: {
         resourceName: @parent_resource.class.name.downcase,
         resourceId: @parent_resource.id,
-        resourceScore: @parent_resource.sum
+        resourceScore: @parent_resource.vote_sum
       }
     else
       head :forbidden

@@ -3,4 +3,4 @@
   | |
   = link_to 'Vote down', polymorphic_path(resource, action: :vote_down), method: :patch, remote: true, data: { type: :json }
 .score
-  = resource.sum
+  = resource.vote_sum

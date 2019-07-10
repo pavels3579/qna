@@ -38,7 +38,9 @@ feature 'User can vote for question', %(
       click_on 'Vote up'
 
       question = find(:css, '.question')
-      expect(question).not_to have_content '2'
+      within '.score' do
+        expect(page).not_to have_content '2'
+      end
     end
 
   end
