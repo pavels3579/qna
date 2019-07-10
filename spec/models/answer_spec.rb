@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
   it { should have_many(:links).dependent(:destroy) }
+  it { should have_many(:votes).dependent(:destroy) }
   it { should belong_to(:question) }
   it { should belong_to(:author) }
 
@@ -35,6 +36,10 @@ RSpec.describe Answer, type: :model do
       answer.mark_as_best
       expect(another_answer.best).to be_falsey
     end
+  end
+
+  it_behaves_like 'votable' do
+    let(:model) { create :question, author: user }
   end
 
 end

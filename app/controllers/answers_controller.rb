@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  include Voted
+
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:new, :create]
   before_action :load_answer, only: [:update, :destroy, :mark_as_best]
@@ -18,6 +20,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.author = current_user
+
     @answer.save
   end
 

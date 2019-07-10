@@ -7,9 +7,6 @@ RSpec.describe LinksController, type: :controller do
   let(:link_url) { 'https://ya.ru' }
   let(:link_name) { 'ya.ru' }
 
-
-
-
   describe 'DELETE #destroy' do
     context 'answer' do
       let(:another_user) { create(:user) }

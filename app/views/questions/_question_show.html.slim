@@ -1,6 +1,11 @@
 h1= @question.title
 p= @question.body
 
+. class="question-#{@question.id}"
+  .vote
+    - if user_signed_in?
+      = render partial: 'votes/vote', locals: { resource: @question }
+
 - if @question.files.attached?
   - @question.files.each do |file|
     div id=file.id class='file'
