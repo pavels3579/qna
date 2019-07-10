@@ -6,4 +6,5 @@ $(document).on('turbolinks:load', function() {
        console.log(answerId);
        $('form#edit-answer-' + answerId).removeClass('hidden');
    });
+
 });

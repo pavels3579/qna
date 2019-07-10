@@ -1,0 +1,6 @@
+- unless current_user&.its_author?(resource)
+  = link_to 'Vote up', polymorphic_path(resource, action: :vote_up), method: :patch, remote: true, data: { type: :json }
+  | |
+  = link_to 'Vote down', polymorphic_path(resource, action: :vote_down), method: :patch, remote: true, data: { type: :json }
+.score
+  = resource.vote_sum

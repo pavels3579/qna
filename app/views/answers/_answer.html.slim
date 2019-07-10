@@ -1,6 +1,10 @@
 - if answer.persisted?
   div id=answer.id class=('best' if answer.best)
     p= answer.body
+    . class="answer-#{answer.id}"
+      .vote
+        - if user_signed_in?
+          = render partial: 'votes/vote', locals: { resource: answer }
 
     - if answer.files.attached?
       - answer.files.each do |file|
