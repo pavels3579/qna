@@ -8,7 +8,7 @@ feature 'User can vote for question', %(
 
   given(:user) { create(:user) }
   given(:another_user) { create(:user) }
-  given(:question) { create(:question, author: user) }
+  given!(:question) { create(:question, author: user) }
 
   describe "Authenticated user - not questions's author" do
     background do

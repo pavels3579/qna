@@ -1,4 +1,5 @@
 RSpec.shared_examples 'votable' do
+  let!(:user) { create :user }
   let!(:user1) { create :user }
   let!(:user2) { create :user }
 
