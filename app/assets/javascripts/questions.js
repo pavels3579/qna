@@ -7,5 +7,15 @@ $(document).on('turbolinks:load', function(){
       $(this).hide();
 
       $('form#edit-question').removeClass('hidden');
-  })
+
+    });
+  });
+
+  App.cable.subscriptions.create('QuestionsChannel', {
+    connected() {
+        this.perform('follow')
+    },
+    received(data) {
+        $('.questions-list').find('tbody').append(data);
+    }
 });
