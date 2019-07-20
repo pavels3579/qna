@@ -10,12 +10,3 @@ $(document).on('turbolinks:load', function(){
 
     });
   });
-
-  App.cable.subscriptions.create('QuestionsChannel', {
-    connected() {
-        this.perform('follow')
-    },
-    received(data) {
-        $('.questions-list').find('tbody').append(data);
-    }
-});

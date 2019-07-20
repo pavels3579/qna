@@ -34,7 +34,7 @@ feature 'User can edit answer', %q{
         click_on 'Save'
         expect(page).not_to have_content answer.body
         expect(page).to have_content 'edited answer'
-        expect(page).not_to have_selector 'textarea'
+        expect(page).not_to have_selector '#answer_body'
       end
     end
 

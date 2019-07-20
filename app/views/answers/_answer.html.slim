@@ -1,7 +1,7 @@
 - if answer.persisted?
   div id=answer.id class=('best' if answer.best)
     p= answer.body
-    . class="answer-#{answer.id}"
+    div class="answer-#{answer.id}"
       .vote
         - if user_signed_in?
           = render partial: 'votes/vote', locals: { resource: answer }
@@ -12,6 +12,11 @@
           p= link_to file.filename.to_s, url_for(file)
           - if current_user&.its_author?(answer)
             p= link_to 'Delete answer attachment', attachment_path(file), method: :delete, remote: true
+    .answer-comments class="comments-#{answer.id}"
+      - if user_signed_in?
+        = render partial: 'comments/comment_form', locals: { resource: answer }
+        = render answer.comments
+
     - unless answer.links.empty?
       .links
         p Links:

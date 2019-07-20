@@ -12,6 +12,8 @@ class QuestionsController < ApplicationController
   def show
     @answer = @question.answers.build
     @answer.links.new
+    @answer.comments.new
+    @question.comments.new
   end
 
   def new
@@ -53,7 +55,7 @@ class QuestionsController < ApplicationController
       'questions',
       ApplicationController.render(
         partial: 'questions/question',
-        locals: { question: @question  }
+        locals: { question: @question }
       )
     )
   end

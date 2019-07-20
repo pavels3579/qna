@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_05_190657) do
+ActiveRecord::Schema.define(version: 2019_07_19_201540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,17 @@ ActiveRecord::Schema.define(version: 2019_07_05_190657) do
     t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_best_answer_awards_on_question_id"
     t.index ["user_id"], name: "index_best_answer_awards_on_user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "body"
+    t.string "commentable_type"
+    t.bigint "commentable_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "links", force: :cascade do |t|
@@ -103,6 +114,7 @@ ActiveRecord::Schema.define(version: 2019_07_05_190657) do
   add_foreign_key "answers", "users", column: "author_id"
   add_foreign_key "best_answer_awards", "questions"
   add_foreign_key "best_answer_awards", "users"
+  add_foreign_key "comments", "users"
   add_foreign_key "questions", "users", column: "author_id"
   add_foreign_key "votes", "users"
 end
