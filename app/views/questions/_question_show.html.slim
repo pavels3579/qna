@@ -1,7 +1,8 @@
-h1= @question.title
+h1 id=@question.id
+  =@question.title
 p= @question.body
 
-. class="question-#{@question.id}"
+div class="question-#{@question.id}"
   .vote
     - if user_signed_in?
       = render partial: 'votes/vote', locals: { resource: @question }
@@ -26,3 +27,7 @@ p= @question.body
             li= link_to link.name, link.url
           - if current_user&.its_author?(@question)
             =link_to "Delete link", link_path(link), method: :delete, remote: true
+.question-comments class="comments-#{@question.id}"
+  - if user_signed_in?
+    = render partial: 'comments/comment_form', locals: { resource: @question }
+    = render @question.comments

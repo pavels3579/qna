@@ -43,7 +43,9 @@ feature 'User can vote for answer', %(
       end
 
       answers = find(:css, '.answers')
-      expect(answers).not_to have_content '2'
+      within '.answers .score' do
+        expect(page).not_to have_content '2'
+      end
     end
 
   end

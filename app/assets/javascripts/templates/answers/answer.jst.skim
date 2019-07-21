@@ -1,0 +1,19 @@
+div class="answer-#{@answer.id}"
+  - if gon.user_id?
+    .vote
+      p
+        a class='vote' data-remote='true' data-method='post' href="/answers/#{@answer.id}/vote_up" Vote up
+      p.score 0
+      p
+        a class='vote' data-remote='true' data-method='post' href="/answers/#{@answer.id}/vote_down" Vote down
+
+  p = @answer.body
+
+  .files
+    p Files:
+    - for file in @files
+      a href="#{file.url}" #{file.name}
+  .links
+    p Links:
+    - for link in @links
+      a href="#{link.url}" #{link.name}
