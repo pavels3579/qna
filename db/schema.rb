@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_19_201540) do
+ActiveRecord::Schema.define(version: 2019_08_06_180148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,16 @@ ActiveRecord::Schema.define(version: 2019_07_19_201540) do
     t.integer "author_id", null: false
     t.boolean "best", default: false, null: false
     t.index ["author_id"], name: "index_answers_on_author_id"
+  end
+
+  create_table "authorizations", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "provider"
+    t.string "uid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider", "uid"], name: "index_authorizations_on_provider_and_uid"
+    t.index ["user_id"], name: "index_authorizations_on_user_id"
   end
 
   create_table "best_answer_awards", force: :cascade do |t|
@@ -112,6 +122,7 @@ ActiveRecord::Schema.define(version: 2019_07_19_201540) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users", column: "author_id"
+  add_foreign_key "authorizations", "users"
   add_foreign_key "best_answer_awards", "questions"
   add_foreign_key "best_answer_awards", "users"
   add_foreign_key "comments", "users"
