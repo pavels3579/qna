@@ -10,8 +10,10 @@ RSpec.describe User, type: :model do
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
 
+  let!(:user) { create(:user) }
+  let(:user_not_verified) { create(:user, email: 'temp@tempusermail.com') }
+
   describe 'its_author?' do
-    let(:user) { create(:user) }
     let(:another_user) { create(:user) }
 
     let(:question) { create(:question, author: user) }
@@ -26,7 +28,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '.find_for_oauth' do
-    let!(:user) { create(:user) }
     let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456') }
     let(:service) { double('Services::FindForOauth') }
 
@@ -34,6 +35,16 @@ RSpec.describe User, type: :model do
       expect(Services::FindForOauth).to receive(:new).with(auth).and_return(service)
       expect(service).to receive(:call)
       User.find_for_oauth(auth)
+    end
+  end
+
+  describe 'email_verified?' do
+    it 'returns true if email doesn\'t include tempusermail string' do
+      expect(user).to be_email_verified
+    end
+
+    it 'returns false if email include tempusermail string' do
+      expect(user_not_verified).not_to be_email_verified
     end
   end
 

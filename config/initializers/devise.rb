@@ -265,6 +265,12 @@ Devise.setup do |config|
                   Rails.application.credentials[Rails.env.to_sym].dig(:github, :client_secret),
                   scope: 'user:email, read:user'
 
+  config.omniauth :vkontakte,
+                  Rails.application.credentials[Rails.env.to_sym].dig(:vk, :api_key),
+                  Rails.application.credentials[Rails.env.to_sym].dig(:vk, :api_secret),
+                  scope: 'email',
+                  lang: 'en'
+
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

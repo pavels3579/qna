@@ -1,0 +1,5 @@
+=form_for current_user, as: 'user', url: finish_signup_path(current_user) do |f|
+
+  = f.label :email
+  = f.text_field :email, value: nil
+  = f.submit 'Set email'

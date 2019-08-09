@@ -17,6 +17,8 @@ module Qna
     # the framework and any gems in your application.
     config.autoload_paths += [config.root.join('app')]
 
+    config.action_mailer.default_url_options = { :host => 'localhost' }
+
     config.generators do |g|
       g.test_framework :rspec,
                        view_specs: false,
