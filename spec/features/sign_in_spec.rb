@@ -8,6 +8,10 @@ feature 'User can sign in', %q{
 
   given(:user) { create(:user) }
 
+  before do
+    user.confirm
+  end
+
   background { visit new_user_session_path }
 
   scenario 'Registered user tries to sign in' do

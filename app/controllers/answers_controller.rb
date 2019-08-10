@@ -68,6 +68,7 @@ class AnswersController < ApplicationController
     ActionCable.server.broadcast(
       "questions/#{@answer.question_id}/answers",
       answer: @answer,
+      author_id: @answer.author_id,
       links: links,
       files: files
     )

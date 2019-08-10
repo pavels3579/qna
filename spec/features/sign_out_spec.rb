@@ -8,6 +8,10 @@ feature 'User can sign out', %q{
 
   given(:user) { create(:user) }
 
+  before do
+    user.confirm
+  end
+
   background { visit root_path }
 
   scenario 'Registered user tries to sign out' do

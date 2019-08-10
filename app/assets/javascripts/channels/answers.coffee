@@ -6,9 +6,10 @@ App.answers = App.cable.subscriptions.create "AnswersChannel",
 
   received: (data) ->
     # Called when there's incoming data on the websocket for this channel
-    answerData = JST['templates/answers/answer']({
-      answer: data.answer
-      links: data.links
-      files: data.files
-    })
-    $('.answers').append answerData
+    if data.author_id != gon.user_id
+      answerData = JST['templates/answers/answer']({
+        answer: data.answer
+        links: data.links
+        files: data.files
+      })
+      $('.answers').append answerData
