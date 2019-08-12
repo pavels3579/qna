@@ -5,6 +5,8 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: [:show, :edit, :update, :destroy]
   after_action :publish_question, only: %i[create]
 
+  authorize_resource except: %i[vote_up vote_down]
+
   def index
     @questions = Question.all
   end
@@ -36,14 +38,11 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    return head :forbidden unless current_user.its_author?(@question)
     @question.update(question_params)
   end
 
   def destroy
-    @question.destroy if current_user.its_author?(@question)
-
-    redirect_to questions_path
+    redirect_to questions_path if @question.destroy
   end
 
   private

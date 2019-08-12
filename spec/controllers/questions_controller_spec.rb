@@ -161,8 +161,8 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'redirects to index' do
-        delete :destroy, params: { id: question }
-        expect(response).to redirect_to questions_path
+        delete :destroy, params: { id: question }, format: :js
+        expect(response.status).to eq(403)
       end
     end
   end

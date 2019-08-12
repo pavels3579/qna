@@ -16,18 +16,14 @@ module Voted
   private
 
   def vote(choice)
-    return head :forbidden if current_user&.its_author?(@parent_resource)
+    authorize! :vote, @parent_resource
 
-    if @parent_resource.send(choice, current_user)
-      render json: {
-        resourceName: @parent_resource.class.name.downcase,
-        resourceId: @parent_resource.id,
-        resourceScore: @parent_resource.vote_sum
-      }
-    else
-      head :forbidden
-    end
-
+    @parent_resource.send(choice, current_user)
+    render json: {
+      resourceName: @parent_resource.class.name.downcase,
+      resourceId: @parent_resource.id,
+      resourceScore: @parent_resource.vote_sum
+    }
   end
 
   def set_parent_resource

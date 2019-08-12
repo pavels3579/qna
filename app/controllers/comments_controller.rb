@@ -3,6 +3,8 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!, only: %i[create]
   after_action :publish_comment, only: %i[create]
 
+  authorize_resource
+
   def create
     @comment = @parent_resource.comments.new(comment_params)
     @comment.user = current_user
