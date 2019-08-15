@@ -8,6 +8,16 @@ class ApplicationController < ActionController::Base
     redirect_to finish_signup_path(current_user) if user_signed_in? && !current_user.email_verified?
   end
 
+  rescue_from CanCan::AccessDenied do |exception|
+    respond_to do |format|
+      format.json { head :forbidden }
+      format.html { redirect_to root_url, alert: exception.message }
+      format.js   { head :forbidden }
+    end
+  end
+
+  check_authorization unless: :devise_controller?
+
   private
 
   def gon_user

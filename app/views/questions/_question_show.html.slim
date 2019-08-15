@@ -11,7 +11,7 @@ div class="question-#{@question.id}"
   - @question.files.each do |file|
     div id=file.id class='file'
       p= link_to file.filename.to_s, url_for(file)
-      - if current_user&.its_author?(@question)
+      - if can?(:update, @question)
         =link_to "Delete attachment", attachment_path(file), method: :delete, remote: true
 - unless @question.links.empty?
   .links
@@ -25,7 +25,7 @@ div class="question-#{@question.id}"
               div= gist_file[:file_content]
           - else
             li= link_to link.name, link.url
-          - if current_user&.its_author?(@question)
+          - if can?(:update, @question)
             =link_to "Delete link", link_path(link), method: :delete, remote: true
 .question-comments class="comments-#{@question.id}"
   - if user_signed_in?
