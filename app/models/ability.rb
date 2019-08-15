@@ -29,5 +29,6 @@ class Ability
     can :vote, [Question, Answer] do |resource|
       !user.its_author?(resource)
     end
+    can :read, [BestAnswerAward]
   end
 end
