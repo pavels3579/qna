@@ -1,6 +1,6 @@
 class BestAnswerAwardsController < ApplicationController
   #skip_authorization_check
-  #before_action :authenticate_user!
+  before_action :authenticate_user!
   #authorize_resource
 
   def index

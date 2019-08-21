@@ -50,6 +50,9 @@ gem 'omniauth-github'
 gem 'omniauth-vkontakte'
 #gem 'sprockets', '3.6.3'
 gem 'cancancan'
+gem 'doorkeeper'
+gem 'active_model_serializers', '~> 0.10.0'
+gem 'oj'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
