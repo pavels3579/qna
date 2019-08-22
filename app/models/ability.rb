@@ -30,5 +30,6 @@ class Ability
       !user.its_author?(resource)
     end
     can :read, [BestAnswerAward]
+    can :me, User, user_id: user.id
   end
 end
