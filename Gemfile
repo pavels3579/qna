@@ -36,23 +36,27 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 # Reduces boot times through caching; required in config/boot.rb
+gem 'active_model_serializers', '~> 0.10.0'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'slim-rails'
-gem 'devise'
-gem 'twitter-bootstrap-rails'
-gem 'jquery-rails'
+gem 'cancancan'
 gem 'cocoon'
-gem 'octokit', '~> 4.0'
+gem 'devise'
+gem 'doorkeeper'
 gem 'gon'
-gem 'skim'
+gem 'jquery-rails'
+gem 'nokogiri'
+gem 'octokit', '~> 4.0'
+gem 'oj'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-vkontakte'
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'skim'
+gem 'slim-rails'
 #gem 'sprockets', '3.6.3'
-gem 'cancancan'
-gem 'doorkeeper'
-gem 'active_model_serializers', '~> 0.10.0'
-gem 'oj'
+gem 'twitter-bootstrap-rails'
+gem 'whenever', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

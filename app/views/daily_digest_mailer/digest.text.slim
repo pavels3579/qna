@@ -1,0 +1,8 @@
+h1 Daily Questions Digest
+table
+  th Title
+  th Body
+  - @questions.each do |question|
+    tr
+      td= question.title
+      td= question.body
