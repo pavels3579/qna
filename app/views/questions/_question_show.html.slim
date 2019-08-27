@@ -6,6 +6,11 @@ div class="question-#{@question.id}"
   .vote
     - if user_signed_in?
       = render partial: 'votes/vote', locals: { resource: @question }
+.subscription
+  - if current_user&.subscribed_to?(@question)
+    = link_to 'Unsubscribe', question_subscription_path(@question), method: :delete, remote: true, id: 'unsubscribe'
+  - else
+    = link_to 'Subscribe', question_subscriptions_path(@question), method: :post, remote: true, id: 'subscribe'
 
 - if @question.files.attached?
   - @question.files.each do |file|
