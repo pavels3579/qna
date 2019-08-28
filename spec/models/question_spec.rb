@@ -4,6 +4,8 @@ RSpec.describe Question, type: :model do
   it { should have_many(:answers).dependent(:destroy) }
   it { should have_many(:links).dependent(:destroy) }
   it { should have_many(:votes).dependent(:destroy) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
+  it { should have_many(:users).through(:subscriptions) }
   it { should belong_to(:author) }
 
   it { should validate_presence_of :title }
@@ -18,6 +20,15 @@ RSpec.describe Question, type: :model do
   it_behaves_like 'votable' do
     let(:question) { create :question, author: user }
     let(:model) { create :answer, question: question, author: user }
+  end
+
+  describe 'reputation' do
+    let(:question) { build(:question, author: create(:user)) }
+
+    it 'calls ReputationJob' do
+      expect(ReputationJob).to receive(:perform_later).with(question)
+      question.save!
+    end
   end
 
 end

@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :votes, dependent: :delete_all
   has_many :comments, dependent: :delete_all
   has_many :authorizations, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -30,6 +31,11 @@ class User < ApplicationRecord
 
   def email_verified?
     email && !email.include?('tempusermail.com')
+  end
+
+  def subscribed_to?(question)
+    #!subscriptions.find_by(question: question).nil?
+    subscriptions.find_by(question: question).present?
   end
 
 end

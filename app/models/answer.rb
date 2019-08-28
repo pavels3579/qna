@@ -12,6 +12,8 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
+  after_create :send_notification
+
   def mark_as_best
     transaction do
       question.answers.update_all(best: false)
@@ -20,5 +22,11 @@ class Answer < ApplicationRecord
       #author.best_answer_awards << question.best_answer_award if question&.best_answer_award
       question.best_answer_award&.update!(user: author)
     end
+  end
+
+  private
+
+  def send_notification
+    AnswerNotificationJob.perform_now(question)
   end
 end
