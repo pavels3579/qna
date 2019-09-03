@@ -4,6 +4,6 @@ class Services::Search
   def perform(scope, query)
     return unless ALLOWED_SCOPES.include?(scope)
 
-    scope.classify.constantize.search(Riddle.escape(query))
+    scope.classify.constantize.search(ThinkingSphinx::Query.escape(query))
   end
 end
