@@ -15,5 +15,24 @@
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
+    <% if user_signed_in? %>
+    <%= form_tag search_index_url, :method => :get do %>
+      <p>
+        <%= text_field_tag :search, params[:search] %>
+        <%= select_tag :scope,
+                       options_for_select(
+                           [
+                               %w(All thinking_sphinx),
+                               %w(Question question),
+                               %w(Answer answer),
+                               %w(Comment comment),
+                               %w(User user)
+                           ]
+                       )
+        %>
+        <%= submit_tag "Search", :name => nil %>
+      </p>
+    <% end %>
+  <% end %>
   </body>
 </html>

@@ -40,10 +40,12 @@ gem 'active_model_serializers', '~> 0.10.0'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'cancancan'
 gem 'cocoon'
+gem 'database_cleaner'
 gem 'devise'
 gem 'doorkeeper'
 gem 'gon'
 gem 'jquery-rails'
+gem 'mysql2'
 gem 'nokogiri'
 gem 'octokit', '~> 4.0'
 gem 'oj'
@@ -55,6 +57,7 @@ gem 'sinatra', require: false
 gem 'skim'
 gem 'slim-rails'
 #gem 'sprockets', '3.6.3'
+gem 'thinking-sphinx'
 gem 'twitter-bootstrap-rails'
 gem 'whenever', require: false
 
