@@ -34,4 +34,9 @@ RSpec.describe Services::Search do
   it 'returns nil if attribute is invalid' do
     expect(subject.perform('error', 'test')).to be_nil
   end
+
+  it 'doesn\'t search if class is not supported' do
+    expect(Link).not_to receive(:search).with('test')
+    subject.perform('link', 'test')
+  end
 end
