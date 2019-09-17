@@ -53,7 +53,7 @@ gem 'oj'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-vkontakte'
-gem 'sidekiq'
+gem 'sidekiq', '~> 5.2'
 gem 'sinatra', require: false
 gem 'skim'
 gem 'slim-rails'
