@@ -18,3 +18,5 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/syst
 
 set :rvm_ruby_version, '2.6.0'
 #set :bundle_bins, %w{gem rake rails sidekiq}
+
+after 'deploy:publishing', 'unicorn:restart'
