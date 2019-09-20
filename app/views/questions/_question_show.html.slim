@@ -1,38 +1,39 @@
-h1 id=@question.id
-  =@question.title
-p= @question.body
+- cache @question do
+  h1 id=@question.id
+    =@question.title
+  p= @question.body
 
-div class="question-#{@question.id}"
-  .vote
+  div class="question-#{@question.id}"
+    .vote
+      - if user_signed_in?
+        = render partial: 'votes/vote', locals: { resource: @question }
+  .subscription
+    - if current_user&.subscribed_to?(@question)
+      = link_to 'Unsubscribe', question_subscription_path(@question), method: :delete, remote: true, id: 'unsubscribe'
+    - else
+      = link_to 'Subscribe', question_subscriptions_path(@question), method: :post, remote: true, id: 'subscribe'
+
+  - if @question.files.attached?
+    - @question.files.each do |file|
+      div id=file.id class='file'
+        p= link_to file.filename.to_s, url_for(file)
+        - if can?(:update, @question)
+          =link_to "Delete attachment", attachment_path(file), method: :delete, remote: true
+  - unless @question.links.empty?
+    .links
+      p Links:
+      - @question.links.each do |link|
+        - if link.persisted?
+          div id=link.id
+            - if gist?(link[:url])
+              - GistService.new(link[:url]).content.each do |gist_file|
+                div= gist_file[:file_name]
+                div= gist_file[:file_content]
+            - else
+              li= link_to link.name, link.url
+            - if can?(:update, @question)
+              =link_to "Delete link", link_path(link), method: :delete, remote: true
+  .question-comments class="comments-#{@question.id}"
     - if user_signed_in?
-      = render partial: 'votes/vote', locals: { resource: @question }
-.subscription
-  - if current_user&.subscribed_to?(@question)
-    = link_to 'Unsubscribe', question_subscription_path(@question), method: :delete, remote: true, id: 'unsubscribe'
-  - else
-    = link_to 'Subscribe', question_subscriptions_path(@question), method: :post, remote: true, id: 'subscribe'
-
-- if @question.files.attached?
-  - @question.files.each do |file|
-    div id=file.id class='file'
-      p= link_to file.filename.to_s, url_for(file)
-      - if can?(:update, @question)
-        =link_to "Delete attachment", attachment_path(file), method: :delete, remote: true
-- unless @question.links.empty?
-  .links
-    p Links:
-    - @question.links.each do |link|
-      - if link.persisted?
-        div id=link.id
-          - if gist?(link[:url])
-            - GistService.new(link[:url]).content.each do |gist_file|
-              div= gist_file[:file_name]
-              div= gist_file[:file_content]
-          - else
-            li= link_to link.name, link.url
-          - if can?(:update, @question)
-            =link_to "Delete link", link_path(link), method: :delete, remote: true
-.question-comments class="comments-#{@question.id}"
-  - if user_signed_in?
-    = render partial: 'comments/comment_form', locals: { resource: @question }
-    = render @question.comments
+      = render partial: 'comments/comment_form', locals: { resource: @question }
+      = render @question.comments

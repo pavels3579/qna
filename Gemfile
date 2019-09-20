@@ -53,6 +53,7 @@ gem 'oj'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-vkontakte'
+gem 'redis-rails'
 gem 'sidekiq', '~> 5.2'
 gem 'sinatra', require: false
 gem 'skim'
