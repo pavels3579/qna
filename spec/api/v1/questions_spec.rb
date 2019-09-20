@@ -13,8 +13,13 @@ describe 'Questions API', type: :request do
 
     context 'authorized' do
       let!(:questions) { create_list(:question, 2, author: user) }
-      let(:question) { questions.first }
-      let(:question_response) { json['questions'].first }
+      #let(:question) { questions.first }
+      let(:question_id_min) { questions.pluck(:id).min }
+      let(:question) { questions.select { |q| q.id == question_id_min }.first }
+
+      #let(:question_response) { json['questions'].first }
+      let(:question_response) { json['questions'].select { |x| x['id'] == question.id }.first }
+
       let!(:answers) { create_list(:answer, 3, author: user, question: question) }
 
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
