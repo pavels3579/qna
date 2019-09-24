@@ -14,12 +14,20 @@
   <body>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    <% if user_signed_in? %>
+      <p>
+        <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+      </p>
+    <% else %>
+      <%= link_to "Sign in", new_user_session_path %>
+    <% end %>
+
     <%= yield %>
     <% if user_signed_in? %>
-    <%= form_tag search_index_url, :method => :get do %>
-      <p>
-        <%= text_field_tag :search, params[:search] %>
-        <%= select_tag :scope,
+      <%= form_tag search_index_url, :method => :get do %>
+        <p>
+          <%= text_field_tag :search, params[:search] %>
+          <%= select_tag :scope,
                        options_for_select(
                            [
                                %w(All thinking_sphinx),
@@ -29,10 +37,10 @@
                                %w(User user)
                            ]
                        )
-        %>
-        <%= submit_tag "Search", :name => nil %>
-      </p>
+          %>
+          <%= submit_tag "Search", :name => nil %>
+        </p>
+      <% end %>
     <% end %>
-  <% end %>
   </body>
 </html>
