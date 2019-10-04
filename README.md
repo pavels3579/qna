@@ -15,3 +15,4 @@ Simplified analogue of the site stackoverflow.com having the following features:
 * REST API.
 
 * Full test coverage (TDD/BDD, Capybara, RSpec) Used gems: devise, slim-rails, cancancan, OmniAuth
+
