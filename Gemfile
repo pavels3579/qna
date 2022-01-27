@@ -54,7 +54,7 @@ gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-vkontakte'
 gem 'redis-rails'
-gem 'sidekiq', '~> 5.2'
+gem 'sidekiq', '~> 6.4'
 gem 'sinatra', require: false
 gem 'skim'
 gem 'slim-rails'
